@@ -158,7 +158,7 @@ class Ics_file {
 
         $attendee = new Attendee(new Formatter());
 
-        if (isset($provider['email']) && ! empty($provider['email']))
+        if (isset($provider['email']) && ! empty($provider['email'] && $settings['share_provider_details']))
         {
             $attendee->setValue($provider['email']);
         }
