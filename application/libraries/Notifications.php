@@ -81,7 +81,7 @@ class Notifications {
             $customer_link = new Url(site_url('appointments/index/' . $appointment['hash']));
             $provider_link = new Url(site_url('backend/index/' . $appointment['hash']));
 
-            $ics_stream = $this->CI->ics_file->get_stream($appointment, $service, $provider, $customer);
+            $ics_stream = $this->CI->ics_file->get_stream($appointment, $service, $provider, $customer, $settings);
 
             $send_customer = filter_var(
                 $this->CI->settings_model->get_setting('customer_notifications'),
