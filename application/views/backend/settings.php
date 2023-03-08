@@ -17,6 +17,8 @@
             system: <?= json_encode($system_settings) ?>,
             user: <?= json_encode($user_settings) ?>
         },
+        workingPlan: <?= json_encode(json_decode($working_plan)) ?>,
+        workingPlanExceptions: <?= json_encode(json_decode($working_plan_exceptions)) ?>,
         user: {
             id: <?= $user_id ?>,
             email: <?= json_encode($user_email) ?>,
@@ -51,6 +53,13 @@
         <?php if ($privileges[PRIV_USER_SETTINGS]['view'] == TRUE): ?>
             <li class="nav-item">
                 <a class="nav-link" href="#current-user" data-toggle="tab"><?= lang('current_user') ?></a>
+            </li>
+        <?php endif ?>
+        <?php if ($privileges[PRIV_USER_SETTINGS]['view'] == TRUE): ?>
+            <li class="nav-item">
+                <a class="nav-link" href="#working-plan" data-toggle="tab">
+                    <?= lang('working_plan') ?>
+                </a>
             </li>
         <?php endif ?>
         <li class="nav-item">
@@ -493,6 +502,94 @@
                     </fieldset>
                 </div>
             </form>
+        </div>
+
+        <!-- WORKING PLAN -->
+        <div class="working-plan-view tab-pane fade clearfix" id="working-plan">
+            <legend class="border-bottom mb-4">
+                <?= lang('working_plan') ?>
+                <?php if ($privileges[PRIV_USER_SETTINGS]['edit'] == TRUE): ?>
+                    <button type="button" class="save-working-plan-settings btn btn-primary btn-sm mb-2"
+                            data-tippy-content="<?= lang('save') ?>">
+                        <i class="fas fa-check-square mr-2"></i>
+                        <?= lang('save') ?>
+                    </button>
+                <?php endif ?>
+            </legend>
+            <button id="reset-working-plan" class="btn btn-primary"
+                    data-tippy-content="<?= lang('reset_working_plan') ?>">
+                <i class="fas fa-redo-alt mr-2"></i>
+                <?= lang('reset_plan') ?></button>
+            <table class="working-plan table table-striped mt-2">
+                <thead>
+                <tr>
+                    <th><?= lang('day') ?></th>
+                    <th><?= lang('start') ?></th>
+                    <th><?= lang('end') ?></th>
+                </tr>
+                </thead>
+                <tbody><!-- Dynamic Content --></tbody>
+            </table>
+
+            <br>
+
+            <h3><?= lang('breaks') ?></h3>
+
+            <p>
+                <?= lang('add_breaks_during_each_day') ?>
+            </p>
+
+            <div>
+                <button type="button" class="add-break btn btn-primary">
+                    <i class="fas fa-plus-square mr-2"></i>
+                    <?= lang('add_break') ?>
+                </button>
+            </div>
+
+            <br>
+
+            <table class="breaks table table-striped">
+                <thead>
+                <tr>
+                    <th><?= lang('day') ?></th>
+                    <th><?= lang('start') ?></th>
+                    <th><?= lang('end') ?></th>
+                    <th><?= lang('actions') ?></th>
+                </tr>
+                </thead>
+                <tbody><!-- Dynamic Content --></tbody>
+            </table>
+
+            <br>
+
+            <h3><?= lang('working_plan_exceptions') ?></h3>
+
+            <p>
+                <?= lang('add_working_plan_exceptions_during_each_day') ?>
+            </p>
+
+            <div>
+                <button type="button" class="add-working-plan-exception btn btn-primary mr-2">
+                    <i class="fas fa-plus-square"></i>
+                    <?= lang('add_working_plan_exception') ?>
+                </button>
+            </div>
+
+            <br>
+
+            <table class="working-plan-exceptions table table-striped">
+                <thead>
+                <tr>
+                    <th><?= lang('day') ?></th>
+                    <th><?= lang('start') ?></th>
+                    <th><?= lang('end') ?></th>
+                    <th><?= lang('actions') ?></th>
+                </tr>
+                </thead>
+                <tbody><!-- Dynamic Content --></tbody>
+            </table>
+
+            <?php require __DIR__ . '/working_plan_exceptions_modal.php' ?>
         </div>
 
         <!-- ABOUT TAB -->

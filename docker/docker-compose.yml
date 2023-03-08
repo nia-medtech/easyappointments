@@ -1,21 +1,23 @@
-version: "3.1"
+version: "3.5"
 services:
-    mysql:
-        image: mysql:5.7
-        container_name: easyappointments-database
-        volumes:
-            - ./mysql:/var/lib/mysql
-        environment:
-            - MYSQL_ROOT_PASSWORD=root
-            - MYSQL_DATABASE=easyappointments
-        ports:
-            - "8001:3306"
-    server:
-        build: ./server
-        image: easyappointments-server:v1
-        container_name: easyappointments-server
-        ports:
-            - "8000:80"
-        volumes:
-            - ../:/var/www/html
-            - ./server/php.ini:/usr/local/etc/php/conf.d/99-overrides.ini
+  mysql:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=easyappointments
+      - MYSQL_PASSWORD=secret
+      - MYSQL_USER=easyappointments
+    
+    expose:
+      - 3306
+
+  server:
+    build: ./server
+    image: easyappointments-server:v1
+    expose:
+      - 80
+    volumes:
+      - ../:/var/www/html
+      - ./server/config.php:/var/www/html/config.php:ro
+      - ./server/email.php:/var/www/html/application/config/email.php:ro
+      - ./server/php.ini:/usr/local/etc/php/conf.d/99-overrides.ini
