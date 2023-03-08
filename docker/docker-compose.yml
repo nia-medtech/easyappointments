@@ -19,5 +19,4 @@ services:
     volumes:
       - ../:/var/www/html
       - ./server/config.php:/var/www/html/config.php:ro
-      - ./server/email.php:/var/www/html/application/config/email.php:ro
       - ./server/php.ini:/usr/local/etc/php/conf.d/99-overrides.ini
