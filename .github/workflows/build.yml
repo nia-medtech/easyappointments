@@ -17,9 +17,11 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '16.19'
-  
-      - name: Install dependencies
+      
+      - name: Install NodeJS dependencies
         run: npm install
+  
+      - name: Install PHP dependencies
         run: composer install
         
       - name: Build
