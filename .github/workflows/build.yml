@@ -13,7 +13,14 @@ jobs:
         with:
           php-version: '8.0'
           tools: composer
+      - name: Set up NodeJS
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.19'
   
       - name: Install dependencies
+        run: npm install
         run: composer install
         
+      - name: Build
+        run: npm build
