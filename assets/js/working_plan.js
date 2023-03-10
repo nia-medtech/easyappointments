@@ -177,7 +177,7 @@
                             })
                         ]
                     })
-                        .appendTo('.breaks tbody');
+                        .appendTo(HTMLclass + ' .breaks tbody');
                 });
             } else {
                 $(HTMLclass + ' #' + index).prop('checked', false);
@@ -197,12 +197,16 @@
      * @param {Object} workingPlanExceptions Contains the working plan exception.
      */
     WorkingPlan.prototype.setupWorkingPlanExceptions = function (workingPlanExceptions) {
+        var HTMLclass = this.HTMLclass;
+
+        $(HTMLclass + ' .working-plan-exceptions tbody').empty();
+
         for (var date in workingPlanExceptions) {
             var workingPlanException = workingPlanExceptions[date];
 
             this
                 .renderWorkingPlanExceptionRow(date, workingPlanException)
-                .appendTo('.working-plan-exceptions tbody');
+                .appendTo(HTMLclass + ' .working-plan-exceptions tbody');
         }
     };
 

@@ -178,6 +178,7 @@ window.BackendSettings = window.BackendSettings || {};
                 // Update the working plan to reflect the current user
                 exports.wpUser.bindEventHandlers();
                 exports.wpUser.setup(JSON.parse(GlobalVariables.settings.user.settings.working_plan));
+                exports.wpUser.setupWorkingPlanExceptions(JSON.parse(GlobalVariables.settings.user.settings.working_plan_exceptions));
                 exports.wpUser.timepickers(false);
             }
 
