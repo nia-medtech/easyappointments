@@ -55,13 +55,14 @@ class Ics_file {
      * @param array $service Service.
      * @param array $provider Provider.
      * @param array $customer Customer.
+     * @param array $customer Settings.
      *
      * @return string Returns the contents of the ICS file.
      *
      * @throws CalendarEventException
      * @throws Exception
      */
-    public function get_stream($appointment, $service, $provider, $customer)
+    public function get_stream($appointment, $service, $provider, $customer, $settings)
     {
         $appointment_timezone = new DateTimeZone($provider['timezone']);
 
@@ -85,17 +86,26 @@ class Ics_file {
             $event->addLocation($location);
         }
 
-        $description = [
+        $provider_description = [
             '',
             lang('provider'),
             '',
             lang('name') . ': ' . $provider['first_name'] . ' ' . $provider['last_name'],
-            lang('email') . ': ' . $provider['email'],
-            lang('phone_number') . ': ' . $provider['phone_number'],
-            lang('address') . ': ' . $provider['address'],
-            lang('city') . ': ' . $provider['city'],
-            lang('zip_code') . ': ' . $provider['zip_code'],
-            '',
+        ];
+
+        if ($settings['share_provider_details']) {
+            array_push(
+                $provider_description,
+                lang('email') . ': ' . $provider['email'],
+                lang('phone_number') . ': ' . $provider['phone_number'],
+                lang('address') . ': ' . $provider['address'],
+                lang('city') . ': ' . $provider['city'],
+                lang('zip_code') . ': ' . $provider['zip_code']
+            );
+        }
+        array_push($provider_description, '');
+
+        $customer_description = [
             lang('customer'),
             '',
             lang('name') . ': ' . $customer['first_name'] . ' ' . $customer['last_name'],
@@ -107,8 +117,9 @@ class Ics_file {
             '',
             lang('notes'),
             '',
-            $appointment['notes'],
         ];
+
+        $description = array_merge($provider_description, $customer_description, [$appointment['notes']]);
 
         $event->setDescription(implode("\\n", $description));
 
@@ -147,7 +158,7 @@ class Ics_file {
 
         $attendee = new Attendee(new Formatter());
 
-        if (isset($provider['email']) && ! empty($provider['email']))
+        if (isset($provider['email']) && ! empty($provider['email'] && $settings['share_provider_details']))
         {
             $attendee->setValue($provider['email']);
         }

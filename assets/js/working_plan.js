@@ -37,6 +37,8 @@
          * @type {Boolean}
          */
         this.enableSubmit = false;
+
+        this.HTMLclass = ".working-plan-view";
     };
 
     /**
@@ -45,6 +47,8 @@
      * @param {Object} workingPlan Contains the working hours and breaks for each day of the week.
      */
     WorkingPlan.prototype.setup = function (workingPlan) {
+        var HTMLclass = this.HTMLclass;
+
         var weekDayId = GeneralFunctions.getWeekDayId(GlobalVariables.firstWeekday);
         var workingPlanSorted = GeneralFunctions.sortWeekDictionary(workingPlan, weekDayId);
 
@@ -102,9 +106,9 @@
                 .appendTo('.working-plan tbody');
 
             if (workingDay) {
-                $('#' + index).prop('checked', true);
-                $('#' + index + '-start').val(Date.parse(workingDay.start).toString(timeFormat).toLowerCase());
-                $('#' + index + '-end').val(Date.parse(workingDay.end).toString(timeFormat).toLowerCase());
+                $(HTMLclass + ' #' + index).prop('checked', true);
+                $(HTMLclass + ' #' + index + '-start').val(Date.parse(workingDay.start).toString(timeFormat).toLowerCase());
+                $(HTMLclass + ' #' + index + '-end').val(Date.parse(workingDay.end).toString(timeFormat).toLowerCase());
 
                 // Sort day's breaks according to the starting hour
                 workingDay.breaks.sort(function (break1, break2) {
@@ -173,12 +177,12 @@
                             })
                         ]
                     })
-                        .appendTo('.breaks tbody');
+                        .appendTo(HTMLclass + ' .breaks tbody');
                 });
             } else {
-                $('#' + index).prop('checked', false);
-                $('#' + index + '-start').prop('disabled', true);
-                $('#' + index + '-end').prop('disabled', true);
+                $(HTMLclass + ' #' + index).prop('checked', false);
+                $(HTMLclass + ' #' + index + '-start').prop('disabled', true);
+                $(HTMLclass + ' #' + index + '-end').prop('disabled', true);
             }
         }.bind(this));
 
@@ -193,12 +197,16 @@
      * @param {Object} workingPlanExceptions Contains the working plan exception.
      */
     WorkingPlan.prototype.setupWorkingPlanExceptions = function (workingPlanExceptions) {
+        var HTMLclass = this.HTMLclass;
+
+        $(HTMLclass + ' .working-plan-exceptions tbody').empty();
+
         for (var date in workingPlanExceptions) {
             var workingPlanException = workingPlanExceptions[date];
 
             this
                 .renderWorkingPlanExceptionRow(date, workingPlanException)
-                .appendTo('.working-plan-exceptions tbody');
+                .appendTo(HTMLclass + ' .working-plan-exceptions tbody');
         }
     };
 
@@ -345,20 +353,21 @@
      * Binds the event handlers for the working plan dom elements.
      */
     WorkingPlan.prototype.bindEventHandlers = function () {
+        var HTMLclass = this.HTMLclass;
         /**
          * Event: Day Checkbox "Click"
          *
          * Enable or disable the time selection for each day.
          */
-        $('.working-plan tbody').on('click', 'input:checkbox', function () {
+        $(HTMLclass + ' tbody').on('click', 'input:checkbox', function () {
             var id = $(this).attr('id');
 
             if ($(this).prop('checked') === true) {
-                $('#' + id + '-start').prop('disabled', false).val('9:00 AM');
-                $('#' + id + '-end').prop('disabled', false).val('6:00 PM');
+                $(HTMLclass + ' #' + id + '-start').prop('disabled', false).val('9:00 AM');
+                $(HTMLclass + ' #' + id + '-end').prop('disabled', false).val('6:00 PM');
             } else {
-                $('#' + id + '-start').prop('disabled', true).val('');
-                $('#' + id + '-end').prop('disabled', true).val('');
+                $(HTMLclass + ' #' + id + '-start').prop('disabled', true).val('');
+                $(HTMLclass + ' #' + id + '-end').prop('disabled', true).val('');
             }
         });
 
@@ -594,16 +603,19 @@
     WorkingPlan.prototype.get = function () {
         var workingPlan = {};
 
-        $('.working-plan input:checkbox').each(function (index, checkbox) {
+        var HTMLclass = this.HTMLclass;
+
+        $(HTMLclass + ' .working-plan input:checkbox').each(function (index, checkbox) {
             var id = $(checkbox).attr('id');
             if ($(checkbox).prop('checked') === true) {
+                console.log(this.HTMLclass + ' #' + id + '-start')
                 workingPlan[id] = {
-                    start: Date.parse($('#' + id + '-start').val()).toString('HH:mm'),
-                    end: Date.parse($('#' + id + '-end').val()).toString('HH:mm'),
+                    start: Date.parse($(this.HTMLclass + ' #' + id + '-start').val()).toString('HH:mm'),
+                    end: Date.parse($(this.HTMLclass + ' #' + id + '-end').val()).toString('HH:mm'),
                     breaks: []
                 };
 
-                $('.breaks tr').each(function (index, tr) {
+                $(this.HTMLclass + ' .breaks tr').each(function (index, tr) {
                     var day = this.convertDayToValue($(tr).find('.break-day').text());
 
                     if (day === id) {
@@ -638,7 +650,7 @@
     WorkingPlan.prototype.getWorkingPlanExceptions = function () {
         var workingPlanExceptions = {};
 
-        $('.working-plan-exceptions tbody tr').each(function (index, tr) {
+        $(this.HTMLclass + ' .working-plan-exceptions tbody tr').each(function (index, tr) {
             var $tr = $(tr);
             var date = $tr.data('date');
             workingPlanExceptions[date] = $tr.data('workingPlanException');
@@ -657,7 +669,7 @@
 
         if (disabled === false) {
             // Set timepickers where needed.
-            $('.working-plan input:text').timepicker({
+            $(this.HTMLclass + ' input:text').timepicker({
                 timeFormat: GlobalVariables.timeFormat === 'regular' ? 'h:mm tt' : 'HH:mm',
                 currentText: EALang.now,
                 closeText: EALang.close,
@@ -677,7 +689,7 @@
                 }
             });
         } else {
-            $('.working-plan input').timepicker('destroy');
+            $(this.HTMLclass + ' input').timepicker('destroy');
         }
     };
 

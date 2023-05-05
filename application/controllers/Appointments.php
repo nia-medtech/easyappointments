@@ -583,7 +583,8 @@ class Appointments extends EA_Controller {
                 'company_link' => $this->settings_model->get_setting('company_link'),
                 'company_email' => $this->settings_model->get_setting('company_email'),
                 'date_format' => $this->settings_model->get_setting('date_format'),
-                'time_format' => $this->settings_model->get_setting('time_format')
+                'time_format' => $this->settings_model->get_setting('time_format'),
+                'share_provider_details' => false
             ];
 
             $this->synchronization->sync_appointment_saved($appointment, $service, $provider, $customer, $settings, $manage_mode);

@@ -43,7 +43,9 @@
             settings: {
                 username: $('#username').val(),
                 notifications: $('#user-notifications').prop('checked'),
-                calendar_view: $('#calendar-view').val()
+                calendar_view: $('#calendar-view').val(),
+                working_plan: JSON.stringify(BackendSettings.wpUser.get()),
+                working_plan_exceptions: JSON.stringify(BackendSettings.wpUser.getWorkingPlanExceptions())
             }
         };
 
@@ -75,6 +77,15 @@
 
         $.post(url, data)
             .done(function () {
+
+                // We need to refresh the working plan.
+                var workingPlan = BackendSettings.wpUser.get();
+                var workingPlanExceptions = BackendSettings.wpUser.getWorkingPlanExceptions();
+                $('.breaks tbody').empty();
+                BackendSettings.wpUser.setup(workingPlan);
+                BackendSettings.wpUser.setupWorkingPlanExceptions(workingPlanExceptions);
+                BackendSettings.wpUser.timepickers(false);
+
                 Backend.displayNotification(EALang.settings_saved);
 
                 // Update footer greetings.
