@@ -33,7 +33,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: nexus.nia-medtech.com:5000/com.niamedtech.3rdparty/easyappointments
+          images: docker-hosted.nexus.nia-medtech.com/com.nia-medtech.3rdparty/easyappointments
           flavor: latest=true
           tags: |
             type=ref,event=branch
@@ -44,7 +44,7 @@ jobs:
         if: github.ref_type == 'tag'
         uses: docker/login-action@v2
         with:
-          registry: nexus.nia-medtech.com:5000
+          registry: docker-hosted.nexus.nia-medtech.com
           username: ${{ secrets.NEXUS_USERNAME }}
           password: ${{ secrets.NEXUS_PASSWORD }}
       
