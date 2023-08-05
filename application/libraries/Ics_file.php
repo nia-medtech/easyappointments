@@ -158,7 +158,7 @@ class Ics_file {
 
         $attendee = new Attendee(new Formatter());
 
-        if (isset($provider['email']) && ! empty($provider['email'] && $settings['share_provider_details']))
+        if (isset($provider['email']) && ! empty($provider['email']) && $settings['share_provider_details'])
         {
             $attendee->setValue($provider['email']);
         }
@@ -174,9 +174,13 @@ class Ics_file {
         $organizer = new Organizer(new Formatter());
 
         $organizer
-            ->setValue($provider['email'])
             ->setName($provider['first_name'] . ' ' . $provider['last_name']);
-
+        
+        if($settings['share_provider_details']) {
+            $organizer
+                ->setValue($provider['email']);
+        }
+        
         $event->setOrganizer($organizer);
 
         // Setup calendar.

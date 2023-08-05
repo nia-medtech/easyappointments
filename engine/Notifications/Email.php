@@ -136,7 +136,7 @@ class Email {
             $appointment_end->setTimezone($appointment_timezone);
         }
 
-        $html = $this->CI->load->view('emails/appointment_details', [
+        $html = $this->CI->load->view('emails/adcompanion_appointment_details', [
             'email_title' => $title->get(),
             'email_message' => $message->get(),
             'appointment_service' => $service['name'],

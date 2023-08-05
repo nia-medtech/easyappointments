@@ -325,3 +325,4 @@ $lang['list'] = 'Liste';
 $lang['default'] = 'Standard';
 $lang['table'] = 'Tabelle';
 $lang['date'] = 'Datum';
+$lang['consultation_link_title'] = 'Konsultation Link';
