@@ -16,6 +16,7 @@ $lang['first_name'] = 'First Name';
 $lang['last_name'] = 'Last Name';
 $lang['email'] = 'Email';
 $lang['phone_number'] = 'Phone Number';
+$lang['phone_number_extra_information'] = '(only for technical support)';
 $lang['phone'] = 'Phone';
 $lang['address'] = 'Address';
 $lang['city'] = 'City';

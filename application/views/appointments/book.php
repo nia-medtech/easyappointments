@@ -273,6 +273,9 @@
                                 <label for="phone-number" class="control-label">
                                     <?= lang('phone_number') ?>
                                     <?= $require_phone_number === '1' ? '<span class="text-danger">*</span>' : '' ?>
+                                    <span class="small">
+                                        <?= lang('phone_number_extra_information') ?>
+                                    </span>
                                 </label>
                                 <input type="text" id="phone-number" maxlength="60"
                                        class="<?= $require_phone_number === '1' ? 'required' : '' ?> form-control"/>
