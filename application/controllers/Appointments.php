@@ -1,4 +1,8 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+use Google\Service\CloudSearch\PushItem;
+
+ defined('BASEPATH') or exit('No direct script access allowed');
 
 /* ----------------------------------------------------------------------------
  * Easy!Appointments - Open Source Web Scheduler
@@ -466,18 +470,54 @@ class Appointments extends EA_Controller {
     /**
      * Search for any provider that can handle the requested service.
      *
-     * This method will return the database ID of the provider with the most available periods.
+     * This method will return the database ID of the provider randomly chosen or with the
+     * most available periods depending on $selection_option.
      *
      * @param int $service_id The requested service ID.
      * @param string $date The date to be searched (Y-m-d).
      * @param string $hour The hour to be searched (H:i).
+     * @param string $selection_option
      *
      * @return int Returns the ID of the provider that can provide the service at the selected date.
      *
      * @throws Exception
      */
-    protected function search_any_provider($service_id, $date, $hour = NULL)
+    protected function search_any_provider($service_id, $date, $hour = NULL, $selection_option = "random")
     {
+        if($selection_option = "random") {
+            return $this->search_any_provider_random($service_id, $date, $hour);
+        }
+        return $this->search_any_provider_most_available_periods($service_id, $date, $hour);
+    }
+
+    private function search_any_provider_random($service_id, $date, $hour = NULL) {
+        $available_providers = $this->providers_model->get_available_providers();
+
+        $service = $this->services_model->get_row($service_id);
+
+        $matching_providers = [];
+
+        foreach ($available_providers as $provider) {
+            foreach ($provider['services'] as $provider_service_id)
+            {
+                if ($provider_service_id == $service_id) {
+                    $available_hours = $this->availability->get_available_hours($date, $service, $provider);
+
+                    if (empty($hour) || in_array($hour, $available_hours, FALSE)) {
+                        array_push($matching_providers, $provider);
+                    }
+                }
+            }
+        }
+
+        if(empty($matching_providers)) {
+            return NULL;
+        }
+        shuffle($matching_providers);
+        return $matching_providers[0]['id'];
+    }
+
+    private function search_any_provider_most_available_periods($service_id, $date, $hour = NULL) {
         $available_providers = $this->providers_model->get_available_providers();
 
         $service = $this->services_model->get_row($service_id);
