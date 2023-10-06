@@ -330,4 +330,8 @@ $lang['list'] = 'List';
 $lang['default'] = 'Default';
 $lang['table'] = 'Table';
 $lang['date'] = 'Date';
+$lang['provider_assignment'] = "Provider assignment";
+$lang['provider_assignment_default'] = "Default";
+$lang['provider_assignment_automatic'] = "Automatic";
+$lang['provider_assignment_manual'] = "Manual";
 // End

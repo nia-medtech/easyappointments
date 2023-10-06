@@ -326,3 +326,7 @@ $lang['list'] = 'Liste';
 $lang['default'] = 'Standard';
 $lang['table'] = 'Tabelle';
 $lang['date'] = 'Datum';
+$lang['provider_assignment'] = "Anbieter-Zuweisung";
+$lang['provider_assignment_default'] = "Default";
+$lang['provider_assignment_automatic'] = "Automatisch";
+$lang['provider_assignment_manual'] = "Manuell";

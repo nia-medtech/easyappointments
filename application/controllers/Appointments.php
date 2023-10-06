@@ -104,7 +104,8 @@ class Appointments extends EA_Controller {
                     'currency' => $service['currency'],
                     'description' => $service['description'],
                     'category_id' => $service['category_id'],
-                    'category_name' => $service['category_name']
+                    'category_name' => $service['category_name'],
+                    'provider_assignment_type' => $service['provider_assignment_type']
                 ];
                 $available_services[$index] = $stripped_data;
             }

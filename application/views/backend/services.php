@@ -179,6 +179,23 @@
                         </label>
                         <textarea id="service-description" rows="4" class="form-control"></textarea>
                     </div>
+
+                    <div class="form-group">
+                        <label for="service-provider-assignment-type">
+                            <?= lang('provider_assignment') ?>
+                        </label>
+                        <select id="service-provider-assignment-type" class="form-control">
+                            <option value="">
+                                <?= lang('provider_assignment_default') ?>
+                            </option>
+                            <option value="<?= PROVIDER_ASSIGNMENT_TYPE_MANUAL ?>">
+                                <?= lang('provider_assignment_manual') ?>
+                            </option>
+                            <option value="<?= PROVIDER_ASSIGNMENT_TYPE_AUTOMATIC ?>">
+                                <?= lang('provider_assignment_automatic') ?>
+                            </option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
@@ -261,6 +278,8 @@
                         </label>
                         <textarea id="category-description" rows="4" class="form-control"></textarea>
                     </div>
+
+                    
                 </div>
             </div>
         </div>
