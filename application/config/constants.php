@@ -89,5 +89,8 @@ define('AVAILABILITIES_TYPE_FIXED', 'fixed');
 
 define('EVENT_MINIMUM_DURATION', 5); // Minutes
 
+define('PROVIDER_ASSIGNMENT_TYPE_MANUAL', 'manual');
+define('PROVIDER_ASSIGNMENT_TYPE_AUTOMATIC', 'automatic');
+
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */
