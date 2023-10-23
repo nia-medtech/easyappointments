@@ -435,7 +435,7 @@ class Appointments extends EA_Controller {
             // that will provide the requested service.
             if ($provider_id === ANY_PROVIDER)
             {
-                $provider_id = $this->search_any_provider($service_id, $selected_date);
+                $provider_id = $this->search_any_provider($service_id, $selected_date, NULL, "most_available");
 
                 if ($provider_id === NULL)
                 {
@@ -477,15 +477,15 @@ class Appointments extends EA_Controller {
      * @param int $service_id The requested service ID.
      * @param string $date The date to be searched (Y-m-d).
      * @param string $hour The hour to be searched (H:i).
-     * @param string $selection_option
+     * @param string $selection_option (random or most_available).
      *
      * @return int Returns the ID of the provider that can provide the service at the selected date.
      *
      * @throws Exception
      */
-    protected function search_any_provider($service_id, $date, $hour = NULL, $selection_option = "random")
+    protected function search_any_provider($service_id, $date, $hour = NULL, $selection_option = "most_available")
     {
-        if($selection_option = "random") {
+        if($selection_option === "random") {
             return $this->search_any_provider_random($service_id, $date, $hour);
         }
         return $this->search_any_provider_most_available_periods($service_id, $date, $hour);
@@ -676,7 +676,7 @@ class Appointments extends EA_Controller {
 
         if ($appointment['id_users_provider'] === ANY_PROVIDER)
         {
-            $appointment['id_users_provider'] = $this->search_any_provider($appointment['id_services'], $date, $hour);
+            $appointment['id_users_provider'] = $this->search_any_provider($appointment['id_services'], $date, $hour, "random");
 
             return $appointment['id_users_provider'];
         }
