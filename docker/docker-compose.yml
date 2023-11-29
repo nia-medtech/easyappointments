@@ -18,5 +18,5 @@ services:
       - 80
     volumes:
       - ../:/var/www/html
-      - ./server/config.php:/var/www/html/config.php:ro
+      - ./server/config.php:/var/www/html/config.php:rw
       - ./server/php.ini:/usr/local/etc/php/conf.d/99-overrides.ini
