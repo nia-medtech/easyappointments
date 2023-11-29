@@ -265,6 +265,9 @@
                             <div class="form-group">
                                 <label for="email" class="control-label">
                                     <?= lang('email') ?>
+                                    <span class="small">
+                                        <?= lang('email_extra_information') ?>
+                                    </span>
                                     <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" id="email" class="required form-control" maxlength="120"/>
@@ -272,10 +275,10 @@
                             <div class="form-group">
                                 <label for="phone-number" class="control-label">
                                     <?= lang('phone_number') ?>
-                                    <?= $require_phone_number === '1' ? '<span class="text-danger">*</span>' : '' ?>
                                     <span class="small">
                                         <?= lang('phone_number_extra_information') ?>
                                     </span>
+                                    <?= $require_phone_number === '1' ? '<span class="text-danger">*</span>' : '' ?>
                                 </label>
                                 <input type="text" id="phone-number" maxlength="60"
                                        class="<?= $require_phone_number === '1' ? 'required' : '' ?> form-control"/>

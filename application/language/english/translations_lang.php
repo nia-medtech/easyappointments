@@ -15,6 +15,7 @@ $lang['customer_information'] = 'Customer Information';
 $lang['first_name'] = 'First Name';
 $lang['last_name'] = 'Last Name';
 $lang['email'] = 'Email';
+$lang['email_extra_information'] = '(as in Nia-App)';
 $lang['phone_number'] = 'Phone Number';
 $lang['phone_number_extra_information'] = '(only for technical support)';
 $lang['phone'] = 'Phone';
