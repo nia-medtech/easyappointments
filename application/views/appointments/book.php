@@ -107,7 +107,7 @@
                                     <strong><?= lang('service') ?></strong>
                                 </label>
 
-                                <select id="select-service" class="form-control">
+                                <select size=<?=count($available_services) + 3?> id="select-service" class="form-control">
                                     <?php
                                     // Group services by category, only if there is at least one service with a parent category.
                                     $has_category = FALSE;
