@@ -108,6 +108,7 @@
                                 </label>
 
                                 <select id="select-service" class="form-control">
+                                    <option />
                                     <?php
                                     // Group services by category, only if there is at least one service with a parent category.
                                     $has_category = FALSE;
