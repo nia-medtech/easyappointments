@@ -225,32 +225,35 @@ window.FrontendBook = window.FrontendBook || {};
 
             $('#select-provider').empty();
 
-            if(service.provider_assignment_type === 'automatic') {
-                if(GlobalVariables.displayAnyProvider === '1') {
-                    $('#select-provider').prepend(new Option('- ' + EALang.any_provider + ' -', 'any-provider', true, true));
-                }
-            } else {
-                GlobalVariables.availableProviders.forEach(function (provider) {
-                    // If the current provider is able to provide the selected service, add him to the list box.
-                    var canServeService = provider.services.filter(function (providerServiceId) {
-                        return Number(providerServiceId) === Number(serviceId);
-                    }).length > 0;
-
-                    if (canServeService) {
-                        $('#select-provider').append(new Option(provider.first_name + ' ' + provider.last_name, provider.id));
+            if(service !== undefined) {
+                
+                if(service.provider_assignment_type === 'automatic') {
+                    if(GlobalVariables.displayAnyProvider === '1') {
+                        $('#select-provider').prepend(new Option('- ' + EALang.any_provider + ' -', 'any-provider', true, true));
                     }
-                });
+                } else {
+                    GlobalVariables.availableProviders.forEach(function (provider) {
+                        // If the current provider is able to provide the selected service, add him to the list box.
+                        var canServeService = provider.services.filter(function (providerServiceId) {
+                            return Number(providerServiceId) === Number(serviceId);
+                        }).length > 0;
 
-                // Add the "Any Provider" entry.
-                if ($('#select-provider option').length > 1 && GlobalVariables.displayAnyProvider === '1' && service.provider_assignment_type !== 'manual') {
-                    $('#select-provider').prepend(new Option('- ' + EALang.any_provider + ' -', 'any-provider', true, true));
-                }
+                        if (canServeService) {
+                            $('#select-provider').append(new Option(provider.first_name + ' ' + provider.last_name, provider.id));
+                        }
+                    });
+
+                    // Add the "Any Provider" entry.
+                    if ($('#select-provider option').length > 1 && GlobalVariables.displayAnyProvider === '1' && service.provider_assignment_type !== 'manual') {
+                        $('#select-provider').prepend(new Option('- ' + EALang.any_provider + ' -', 'any-provider', true, true));
+                    }
+                } 
+
+    
+                FrontendBookApi.getUnavailableDates($('#select-provider').val(), $(this).val(),
+                    $('#select-date').datepicker('getDate').toString('yyyy-MM-dd'));
+                FrontendBook.updateConfirmFrame();
             } 
-
-  
-            FrontendBookApi.getUnavailableDates($('#select-provider').val(), $(this).val(),
-                $('#select-date').datepicker('getDate').toString('yyyy-MM-dd'));
-            FrontendBook.updateConfirmFrame();
             updateServiceDescription(serviceId);
         });
 
